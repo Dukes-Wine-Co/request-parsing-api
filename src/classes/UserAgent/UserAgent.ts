@@ -1,5 +1,5 @@
-import UAParser from "ua-parser-js";
-import { capitalizeFirstLetter, clearEmptyObjFields } from "../../helpers";
+import UAParser from 'ua-parser-js';
+import { capitalizeFirstLetter, clearEmptyObjFields } from '../../helpers';
 import UserAgentType from './UserAgent.types';
 
 export class UserAgent {

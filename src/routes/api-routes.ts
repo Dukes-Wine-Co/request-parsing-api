@@ -1,6 +1,6 @@
-import express from "express";
-import {preformatRequestLog, processLog, saveLogInDB} from "./route-helpers/process-request";
-import {isValidDBReq} from "./route-helpers/request-helpers";
+import express from 'express';
+import { preformatRequestLog, processLog, saveLogInDB } from './route-helpers/process-request';
+import { isValidDBReq } from './route-helpers/request-helpers';
 
 const apiRoutes = app => {
     const router = express.Router();
@@ -15,11 +15,11 @@ const apiRoutes = app => {
         const apiMsg = 'You are not authorized to view this route.';
 
         res.status(403).send({
-            message: apiMsg,
+            message: apiMsg
         });
     });
 
-    router.post('/process', async (req, res) => {
+    router.post('/process', async(req, res) => {
         const { request } = req.body;
 
         try {
@@ -27,7 +27,7 @@ const apiRoutes = app => {
             await saveLogInDB(processedLog);
 
             res.send({
-                message: "req saved to db"
+                message: 'req saved to db'
             });
         } catch (e){
             res
@@ -35,10 +35,10 @@ const apiRoutes = app => {
             .send({
                 message: 'there was an error processing this request',
                 error: e
-            })
+            });
         }
 
-    })
-}
+    });
+};
 
 export default apiRoutes;

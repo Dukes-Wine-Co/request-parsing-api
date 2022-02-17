@@ -1,10 +1,10 @@
-import {DateInfo, Day, Time, TimeInfo} from "./CustomDate.types";
+import { DateInfo, Day, Time, TimeInfo } from './CustomDate.types';
 
 export class CustomDate {
     date: Date;
 
     constructor(timestamp: number | string) {
-        this.date = new Date(+timestamp)
+        this.date = new Date(+timestamp);
     }
 
     private parseDateInfo(): Day {

@@ -1,6 +1,6 @@
 import { Schema, model } from 'mongoose';
-import Log from "../../classes/Log";
-import {configureMongoCollectionName} from "../../config/mongo-config";
+import Log from '../../classes/Log';
+import { configureMongoCollectionName } from '../../config/mongo-config';
 
 const requestLog = new Schema<Log.AsObject>({
     request: {
@@ -193,4 +193,4 @@ const requestLog = new Schema<Log.AsObject>({
     }
 });
 
-export const  RequestLogModel = model<Log.AsObject>(configureMongoCollectionName('RequestLog'), requestLog);
+export const RequestLogModel = model<Log.AsObject>(configureMongoCollectionName('RequestLog'), requestLog);

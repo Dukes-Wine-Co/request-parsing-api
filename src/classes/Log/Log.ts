@@ -1,6 +1,6 @@
-import UserAgent from "../UserAgent";
-import CustomDate from "../CustomDate";
-import {IPInfo, LogReqBody} from "./Log.types";
+import UserAgent from '../UserAgent';
+import CustomDate from '../CustomDate';
+import { IPInfo, LogReqBody } from './Log.types';
 import axios from 'axios';
 
 export class Log {
@@ -25,7 +25,7 @@ export class Log {
 
     async getLocationData(): Promise<IPInfo | {}> {
         if (this.isLocalRequest()){
-            return Promise.resolve({})
+            return Promise.resolve({});
         }
 
         const requestLocation = `https://ipapi.co/${this.request.ip}/json`;
@@ -45,14 +45,14 @@ export class Log {
                 timezone: data.timezone,
                 asn: data.asn,
                 org: data.org
-            }
+            };
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                console.log(`There was an axios error making this request: ${error}`)
+                console.log(`There was an axios error making this request: ${error}`);
                 return {};
             } else {
-                console.log(`There was an error making this request: ${error}`)
+                console.log(`There was an error making this request: ${error}`);
                 return {};
             }
         }
@@ -67,12 +67,12 @@ export class Log {
             request: this.request,
             location: locationData,
             userAgentInfo: userAgentInfo,
-            dateInfo: dateInfo,
-        }
+            dateInfo: dateInfo
+        };
     }
 
     async toObject(): Promise<Log.AsObject> {
-        return this.processLog()
+        return this.processLog();
     }
 }
 
