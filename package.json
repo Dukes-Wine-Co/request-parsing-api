@@ -13,7 +13,9 @@
     "dev": "source env.sh; DEBUG=express:* ts-node-dev src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "start": "tsc && NODE_ENV=production node dist/index.js",
+    "postinstall": "yarn run tsc",
+    "start": "NODE_ENV=production node dist/index.js",
+    "tsc": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
