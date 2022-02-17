@@ -13,8 +13,7 @@
     "dev": "source env.sh; DEBUG=express:* ts-node-dev src/index.ts",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
-    "prestart": "yarn run compile",
-    "start": "NODE_ENV=production node dist/index.js",
+    "start": "tsc && NODE_ENV=production node dist/index.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
