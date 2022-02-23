@@ -30,7 +30,7 @@ const apiRoutes = app => {
         try {
             const logInDb = await getLogFromDb(request);
 
-            if (!!logInDb){
+            if (logInDb){
                 res.send({
                     message: 'log exists in db already'
                 });
@@ -44,7 +44,7 @@ const apiRoutes = app => {
                 message: 'req saved to db'
             });
         } catch (e){
-            console.error("router.post(/api/process): ", e)
+            console.error('router.post(/api/process): ', e);
 
             res
             .status(500)
@@ -65,7 +65,7 @@ const apiRoutes = app => {
                 res
                 .status(500)
                 .send({
-                    message: 'log does not exist',
+                    message: 'log does not exist'
                 });
                 return;
             }
@@ -78,7 +78,7 @@ const apiRoutes = app => {
                 message: 'req enriched in db'
             });
         } catch (e){
-            console.error("router.post(/api/enrich): ", e)
+            console.error('router.post(/api/enrich): ', e);
 
             res
                 .status(500)
@@ -87,7 +87,7 @@ const apiRoutes = app => {
                     error: e?.message
                 });
         }
-    })
+    });
 };
 
 export default apiRoutes;

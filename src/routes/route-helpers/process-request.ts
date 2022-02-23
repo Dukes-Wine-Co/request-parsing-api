@@ -1,6 +1,6 @@
 import Log from '../../classes/Log';
 import { RequestLogModel } from '../../mongoose/schemas/Log.schema';
-import {LogReqBody} from "../../classes/Log/Log.types";
+import { LogReqBody } from '../../classes/Log/Log.types';
 
 export const preformatRequestLog = (incomingRequest: unknown): string => {
     return typeof incomingRequest === 'string' ? incomingRequest : JSON.stringify(incomingRequest);
@@ -10,13 +10,13 @@ export const processLog = async(incomingReq: string): Promise<Log.AsObject> => {
     return new Log(incomingReq).toObject();
 };
 
-export const getLogFromDb = async (log: unknown) => {
+export const getLogFromDb = async(log: unknown) => {
     const reqObject: LogReqBody = typeof log === 'string' ? JSON.parse(log) : log;
 
     return RequestLogModel.findOne({
-        "request.timestamp": reqObject.timestamp
+        'request.timestamp': reqObject.timestamp
     });
-}
+};
 
 export const saveLogInDB = async(processedReq: Log.AsObject) => {
     try {
@@ -34,19 +34,16 @@ export const replaceLogInDB = async(processedReq: Log.AsObject) => {
         const { _id: firstDocId, ...safeDoc } = logDoc;
         // @ts-ignore
         const innerDoc = safeDoc._doc;
-        const {_id, ...replacementDoc} = innerDoc
-
-
-        console.log(replacementDoc);
+        const { _id, ...replacementDoc } = innerDoc;
 
         await RequestLogModel.replaceOne(
             {
-                "request.timestamp": processedReq.request.timestamp
+                'request.timestamp': processedReq.request.timestamp
             },
             replacementDoc
-        )
-        console.log('replaceLogInDB(): req updated in db')
+        );
+        console.log('replaceLogInDB(): req updated in db');
     } catch (e){
         return Promise.reject(`replaceLogInDB(): ${e.message}`);
     }
-}
+};
