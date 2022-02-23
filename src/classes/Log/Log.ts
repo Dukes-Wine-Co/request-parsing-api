@@ -49,10 +49,10 @@ export class Log {
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                console.log(`There was an axios error making this request: ${error}`);
+                console.error(`axios.get(): axios.isAxiosError(): ${error}`);
                 return {};
             } else {
-                console.log(`There was an error making this request: ${error}`);
+                console.error(`axios.get(): ${error}`);
                 return {};
             }
         }
