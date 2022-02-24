@@ -18,6 +18,10 @@ export class Log {
         return new UserAgent(uaString).toObject();
     }
 
+    private static hasApiKeyDefined(): boolean {
+        return process.env?.IP_API_KEY.length > 0;
+    }
+
     private getDateInfo(): CustomDate.AsObject {
         const { timestamp } = this.request;
         return new CustomDate(timestamp).toObject();
@@ -28,7 +32,11 @@ export class Log {
             return Promise.resolve({});
         }
 
-        const requestLocation = `https://ipapi.co/${this.request.ip}/json`;
+        const baseApiRoute = `https://ipapi.co/${this.request.ip}/json`;
+
+        const requestLocation = Log.hasApiKeyDefined()
+            ? `${baseApiRoute}/?key=${process.env.IP_API_KEY}`
+            : baseApiRoute;
 
         try {
             const { data } = await axios.get(requestLocation);
@@ -49,7 +57,7 @@ export class Log {
 
         } catch (error) {
             if (axios.isAxiosError(error)) {
-                console.error(`axios.get(): axios.isAxiosError(): ${error}`);
+                console.error(`axios.isAxiosError(): ${error}`);
                 return {};
             } else {
                 console.error(`axios.get(): ${error}`);
@@ -58,13 +66,24 @@ export class Log {
         }
     }
 
+    private static formatRequest(inputReq: LogReqBody): LogReqBody {
+        const { ip, ...rest } = inputReq;
+
+        const [ firstIp ] = ip.split(',');
+
+        return {
+            ip: firstIp,
+            ...rest
+        };
+    }
+
     private async processLog(): Promise<Log.AsObject> {
         const locationData = await this.getLocationData();
         const userAgentInfo = Log.processUserAgent(this.request.userAgent);
         const dateInfo = this.getDateInfo();
 
         return {
-            request: this.request,
+            request: Log.formatRequest(this.request),
             location: locationData,
             userAgentInfo: userAgentInfo,
             dateInfo: dateInfo
